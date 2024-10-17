@@ -1,82 +1,81 @@
 # Lifebuoy Ring Detection and Removal using Detectron2 and LaMa Inpainting
-Project Overview
+
+## Project Overview
+
 This project implements a two-step process to detect and remove lifebuoy rings from images. The approach involves:
-1.	Lifebuoy Ring Detection: Using [Detectron2]([https://www.kaggle.com/datasets/sushilyadav1998/bollywood-celeb-localized-face-dataset](https://github.com/facebookresearch/detectron2)) for object detection and instance segmentation, we trained a custom model to detect lifebuoy rings and generate precise masks.
-2.	Inpainting: After generating the masks, [LaMa Inpainting]([https://github.com/advimman/lama]) is used to remove the detected objects and seamlessly restore the image.
+
+1. **Lifebuoy Ring Detection:** Using [Detectron2](https://github.com/facebookresearch/detectron2) for object detection and instance segmentation, we trained a custom model to detect lifebuoy rings and generate precise masks.
    
-The dataset used for training contains images with lifebuoy rings in diverse conditions, including different environments and backgrounds. Annotations for the rings were created using the [VGG Image Annotator]([https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html]) (VIA), a lightweight tool for image labeling.
+2. **Inpainting:** After generating the masks, [LaMa Inpainting](https://github.com/advimman/lama) is used to remove the detected objects and seamlessly restore the image.
 
+The dataset used for training contains images with lifebuoy rings in diverse conditions, including different environments and backgrounds. Annotations for the rings were created using the [VGG Image Annotator (VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html), a lightweight tool for image labeling.
 
-________________________________________
-Table of Contents
+---
 
-•	Project Overview
+## Table of Contents
 
-•	Dataset Collection and Annotation
+- Project Overview
+- Dataset Collection and Annotation
+- Model Training
+  - Detectron2 Training
+  - Mask Creation
+- LaMa Inpainting
+- Results
 
-•	Model Training
+---
 
-    o	Detectron2 Training
-    
-    o	Mask Creation
-    
-•	LaMa Inpainting
+## Dataset Collection and Annotation
 
-•	Results
-________________________________________
-
-Dataset Collection and Annotation
-
-Dataset
+### Dataset
 
 The dataset consists of images containing lifebuoy rings in various conditions, such as different lighting, backgrounds, and angles. These diverse conditions ensure that the model can robustly detect lifebuoy rings across a wide range of scenarios.
 
-Annotation
+### Annotation
 
-Annotations were performed using the VGG Image Annotator (VIA). Polygons were manually drawn around the lifebuoy rings to provide accurate annotations for object detection.
+Annotations were performed using the [VGG Image Annotator (VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html). Polygons were manually drawn around the lifebuoy rings to provide accurate annotations for object detection.
 
-Annotation Process:
+#### Annotation Process:
 
-1.	Load the collected images into VIA.
-
-2.	Manually draw polygons around the lifebuoy rings to define the regions of interest.
-
-3.	Save the annotations in VIA’s JSON format.
-
-4.	Place the annotation files in the dataset directory for Detectron2 training.
+1. Load the collected images into VIA.
+2. Manually draw polygons around the lifebuoy rings to define the regions of interest.
+3. Save the annotations in VIA’s JSON format.
+4. Place the annotation files in the dataset directory for Detectron2 training.
    
 These annotations were essential in training the model to detect and segment the lifebuoy rings.
-________________________________________
 
-Model Training
+---
 
-Detectron2 Training
+## Model Training
 
-The annotated dataset was used to fine-tune a pre-trained Mask R-CNN model from Detectron2, an open-source platform developed by Facebook AI Research for object detection and segmentation tasks.
+### Detectron2 Training
 
-Training Process:
+The annotated dataset was used to fine-tune a pre-trained Mask R-CNN model from [Detectron2](https://github.com/facebookresearch/detectron2), an open-source platform developed by Facebook AI Research for object detection and segmentation tasks.
 
-1.	Data Loading: Load the images and annotations into the Detectron2 framework.
+#### Training Process:
 
-2.	Model: Fine-tune a pre-trained Mask R-CNN model on the lifebuoy ring dataset.
-
-3.	Hyperparameters: Customize hyperparameters such as learning rate, batch size, and epochs for optimal performance.
+1. **Data Loading:** Load the images and annotations into the Detectron2 framework.
+2. **Model:** Fine-tune a pre-trained Mask R-CNN model on the lifebuoy ring dataset.
+3. **Hyperparameters:** Customize hyperparameters such as learning rate, batch size, and epochs for optimal performance.
    
 Detectron2 was chosen for its powerful instance segmentation capabilities, which helped create high-quality masks of the lifebuoy rings.
 
-Mask Creation
+### Mask Creation
 
 After training, the Detectron2 model was used to generate masks for the detected lifebuoy rings in the images. These masks formed the basis for the inpainting process, defining the regions to be removed and restored.
-________________________________________
 
-LaMa Inpainting
+---
 
-The LaMa Inpainting model was used to remove the detected lifebuoy rings and seamlessly inpaint the masked regions. LaMa is an advanced model specifically designed to handle large masked areas and complex structures, making it ideal for object removal and image restoration tasks.
+## LaMa Inpainting
 
-Inpainting Process:
-1.	Input: The original image and the masks generated by Detectron2 were fed into the LaMa inpainting model.
+The [LaMa Inpainting](https://github.com/advimman/lama) model was used to remove the detected lifebuoy rings and seamlessly inpaint the masked regions. LaMa is an advanced model specifically designed to handle large masked areas and complex structures, making it ideal for object removal and image restoration tasks.
 
-2.	Inpainting: LaMa filled in the regions defined by the masks, reconstructing the image where the lifebuoy rings were removed.
-   
-Results
+#### Inpainting Process:
 
+1. **Input:** The original image and the masks generated by Detectron2 were fed into the LaMa inpainting model.
+2. **Inpainting:** LaMa filled in the regions defined by the masks, reconstructing the image where the lifebuoy rings were removed.
+
+---
+
+## Results
+
+We successfully applied Detectron2 and LaMa inpainting to detect and remove lifebuoy rings from images. The combined process resulted in high-quality object removal and image restoration, producing seamless images where the lifebuoy rings were originally located.
